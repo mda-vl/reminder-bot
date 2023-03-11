@@ -1,0 +1,12 @@
+{
+  "name": "Binance Alarm Bot",
+  "log_dir": "log/",
+  "db_dir": "db/",
+  "admins": [
+    960389355
+  ],
+  "users": [
+    485825722,
+    5927787003
+  ]
+}
