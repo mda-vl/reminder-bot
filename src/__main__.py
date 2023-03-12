@@ -33,6 +33,7 @@ def main() -> None:
         .build()
     )
 
+    controller.add_jobs_queue(app)
     controller.add_command_handlers(app)
 
     app.run_polling()
