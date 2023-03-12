@@ -1,31 +1,17 @@
 import pytz
 from pathlib import Path
 
-from telegram import Update
 from telegram.constants import ParseMode
 from telegram.ext import (
     ApplicationBuilder,
     Defaults,
-    ContextTypes,
-    CommandHandler,
-    MessageHandler,
-    filters,
 )
 
 from system import log
 from utils import settings, states
+from controller import controller
 
 LOG_LEVEL = "INFO"
-
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(
-        f"Hello {update.effective_user.first_name}",
-    )
-
-
-async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(f"{update.message.text}")
 
 
 def main() -> None:
@@ -47,8 +33,7 @@ def main() -> None:
         .build()
     )
 
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), echo))
+    controller.add_command_handlers(app)
 
     app.run_polling()
 
