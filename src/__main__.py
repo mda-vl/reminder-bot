@@ -9,7 +9,7 @@ from telegram.ext import (
 
 from system import log
 from utils import settings, states, ui_commands
-from controller import controller
+from controller import controller, error
 
 LOG_LEVEL = "INFO"
 
@@ -36,6 +36,8 @@ def main() -> None:
 
     controller.add_jobs_queue(app)
     controller.add_command_handlers(app)
+
+    app.add_error_handler(error.error_handler)
 
     app.run_polling()
 
