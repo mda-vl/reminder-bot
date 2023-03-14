@@ -6,7 +6,7 @@ from telegram.ext import (
 )
 
 from .commands import start, echo
-from .jobs import init_tg_menu, periodic_message
+from .jobs import periodic_message
 
 
 def add_command_handlers(app: Application) -> None:
@@ -16,11 +16,7 @@ def add_command_handlers(app: Application) -> None:
 
 def add_jobs_queue(app: Application) -> None:
     job_queue = app.job_queue
-    job_queue.run_once(
-        callback=init_tg_menu,
-        when=1,
-        name="init_tg_menu",
-    )
+
     job_queue.run_repeating(
         callback=periodic_message,
         interval=10,

@@ -131,3 +131,4 @@ dmypy.json
 # My ignore
 secrets.ini
 log/
+.vscode/*

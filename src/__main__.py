@@ -8,7 +8,7 @@ from telegram.ext import (
 )
 
 from system import log
-from utils import settings, states
+from utils import settings, states, ui_commands
 from controller import controller
 
 LOG_LEVEL = "INFO"
@@ -30,6 +30,7 @@ def main() -> None:
             )
         )
         .token(states.config.api_token)
+        .post_init(ui_commands.set_bot_commands)
         .build()
     )
 
