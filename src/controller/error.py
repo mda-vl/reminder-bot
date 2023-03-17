@@ -9,7 +9,10 @@ from telegram.ext import ContextTypes
 from utils import states
 
 
-async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def error_handler(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
     logger.error(f"Exception while handling an update: {context.error}")
 
     tb_list = traceback.format_exception(
@@ -17,14 +20,14 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     )
     tb_string = "".join(tb_list)
 
-    update_str = update.to_dict() if isinstance(update, Update) else str(update)
+    update_str = update.to_dict() if isinstance(update, Update) else str(update)  # noqa
 
     message = (
         f"An exception was raised while handling an update\n"
-        f"<pre>update = {html.escape(ujson.dumps(update_str, indent=2, ensure_ascii=False))}"
+        f"<pre>update = {html.escape(ujson.dumps(update_str, indent=2, ensure_ascii=False))}"  # noqa
         "</pre>\n\n"
-        f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
-        f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
+        f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"  # noqa
+        f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"  # noqa
         f"<pre>{html.escape(tb_string)}</pre>"
     )
 

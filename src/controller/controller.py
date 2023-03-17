@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -6,7 +8,7 @@ from telegram.ext import (
 )
 
 from .commands import start, echo
-from .jobs import periodic_message
+from .jobs import sym_request
 
 
 def add_command_handlers(app: Application) -> None:
@@ -17,8 +19,8 @@ def add_command_handlers(app: Application) -> None:
 def add_jobs_queue(app: Application) -> None:
     job_queue = app.job_queue
 
-    job_queue.run_repeating(
-        callback=periodic_message,
-        interval=10,
-        name="periodic_job",
+    job_queue.run_once(
+        callback=sym_request,
+        when=timedelta(seconds=10),
+        name="once_job",
     )
