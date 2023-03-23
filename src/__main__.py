@@ -10,16 +10,22 @@ from telegram.ext import (
 from system import log
 from utils import settings, states, process
 from controller import controller, error
+from model import db
+from model import model
 
 LOG_LEVEL = "INFO"
 
 
 def main() -> None:
     log.set_log_to_console(LOG_LEVEL)
+
     states.config = settings.get_config(
         Path(__file__).parent / "settings.json",
     )
+
     log.set_log_to_files(LOG_LEVEL)
+
+    model.Base.metadata.create_all(db.get_engine())
 
     app = (
         ApplicationBuilder()

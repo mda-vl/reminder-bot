@@ -7,13 +7,19 @@ from telegram.ext import (
     filters,
 )
 
-from .commands import start, echo
+from . import commands
 from .jobs import sym_request
 
 
 def add_command_handlers(app: Application) -> None:
-    app.add_handler(CommandHandler(["start", "help"], start))
-    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), echo))
+    app.add_handler(CommandHandler(["start", "help"], commands.start))
+    app.add_handler(CommandHandler("set", commands.set))
+    app.add_handler(CommandHandler("tlist", commands.tlst))
+    app.add_handler(CommandHandler("list", commands.lst))
+    app.add_handler(CommandHandler("slist", commands.slst))
+    app.add_handler(
+        MessageHandler(filters.TEXT & (~filters.COMMAND), commands.echo),
+    )
 
 
 def add_jobs_queue(app: Application) -> None:
